@@ -16,8 +16,10 @@ import org.json.JSONObject;
 
 
 
-@Path("/serveiSalutacio")
-public class Salutacio {
+@Path("/serveiCarro")
+public class ServeiCarro {
+	
+	GestorBd db= new GestorBd(Constant.dbserver,Constant.database,Constant.user,Constant.password);
 	
 	@Path("/JSON/{f}")
 	@GET
@@ -50,6 +52,24 @@ public class Salutacio {
 		return tasques
 				
 	}*/
+	
+	
+	@Path("/Autenticar/{nom}/{passwd}")	
+	@GET	
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response Autenticar(@PathParam("nom") String nom,@PathParam("passwd" )String passwd) {
+		try {
+			
+			
+			String token=db.autenticar(nom,passwd);
+			
+			GenericEntity<String> genericEntity = new GenericEntity<String>(token){};
+			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	
 	
 	@Path("/Tasques")	
 	@GET	
