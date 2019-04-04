@@ -1,5 +1,9 @@
 package api;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Productes")
 public class Producte {
 	
 	private int id;
@@ -63,9 +67,24 @@ public class Producte {
 		this.data = data;
 		this.venuts = venuts;
 	}
+	
+	public Producte( String nom, int disponibilitat, String descripcio, int preu, String propietari, String data,
+			int venuts,String dataFi) {
+		super();
+	
+		this.nom = nom;
+		this.disponibilitat = disponibilitat;
+		this.descripcio = descripcio;
+		this.preu = preu;
+		this.propietari = propietari;
+		this.data = data;
+		this.venuts = venuts;
+		this.dataFi=dataFi;
+	}
+	
 
 
-
+	@XmlElement(name = "data")
 	public String getData() {
 		return data;
 	}
@@ -128,25 +147,35 @@ public class Producte {
 	}
 
 
+	
 
+
+
+
+
+
+	@XmlElement(name = "nom")
 	public String getNom() {
 		return nom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	@XmlElement(name = "disponibilitat")
 	public int getDisponibilitat() {
 		return disponibilitat;
 	}
 	public void setDisponibilitat(int disponibilitat) {
 		this.disponibilitat = disponibilitat;
 	}
+	@XmlElement(name = "descripcio")
 	public String getDescripcio() {
 		return descripcio;
 	}
 	public void setDescripcio(String descripcio) {
 		this.descripcio = descripcio;
 	}
+	@XmlElement(name = "preu")
 	public int getPreu() {
 		return preu;
 	}
@@ -154,7 +183,7 @@ public class Producte {
 		this.preu = preu;
 	}
 
-
+	@XmlElement(name = "propietari")
 	public String getPropietari() {
 		return propietari;
 	}
@@ -164,7 +193,7 @@ public class Producte {
 		this.propietari = propietari;
 	}
 
-
+	@XmlElement(name = "id")
 	public int getId() {
 		return id;
 	}
@@ -175,7 +204,7 @@ public class Producte {
 	}
 
 
-
+	@XmlElement(name = "venuts")
 	public int getVenuts() {
 		return venuts;
 	}
@@ -187,7 +216,7 @@ public class Producte {
 	}
 
 
-
+	@XmlElement(name = "dataFi")
 	public String getDataFi() {
 		return dataFi;
 	}

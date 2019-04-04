@@ -60,6 +60,9 @@ public class ServeiCarro {
 	public Response Autenticar(@PathParam("nom") String nom,@PathParam("passwd" )String passwd) {
 		try {
 			
+			//System.out.println();
+			
+			
 			
 			String token=db.autenticar(nom,passwd);
 			
@@ -69,6 +72,36 @@ public class ServeiCarro {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
+	
+	
+	
+	@Path("/obtenirProducte/{idUser}/{idProduct}")	
+	@GET	
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response obtenirProducte(@PathParam("idUser") String user,@PathParam("idProduct" )String product) {
+		try {
+			
+			
+			//String token=db.autenticar(nom,passwd);
+			
+			if(db.getToken(user)==false) {
+				return Response.status(Response.Status.UNAUTHORIZED).build();
+			}
+			
+			Producte p=db.obtenirProducte( product);
+			
+			GenericEntity<Producte> genericEntity = new GenericEntity<Producte>(p){};
+			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	@Path("/Tasques")	

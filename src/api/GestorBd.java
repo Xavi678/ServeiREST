@@ -546,6 +546,50 @@ public class GestorBd {
 
 		
 	}
+
+	public Producte obtenirProducte( String product) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://"+this.hostname+"/"+this.database+this.temps,this.userLogin,this.userPasswd);
+		//ArrayList<Producte> productes=new ArrayList<Producte>();
+		String sql="Select * from productes where id=? ";
+		
+		PreparedStatement prs=conn.prepareStatement(sql);
+		prs.setString(1, product);
+		ResultSet rs=prs.executeQuery();
+		Producte p=null;
+		while(rs.next()) {
+		p=new Producte(rs.getString( "nom"), rs.getInt( "disponibilitat"), rs.getString( "descripcio"), rs.getInt("preu"), rs.getString("propietari"), rs.getString( "data"), rs.getInt("venuts"), rs.getString("dataFi"));
+		}
+		
+		return p;
+	}
+
+	public Boolean getToken(String user) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		Connection conn = DriverManager.getConnection("jdbc:mysql://"+this.hostname+"/"+this.database+this.temps,this.userLogin,this.userPasswd);
+		//ArrayList<Producte> productes=new ArrayList<Producte>();
+		String sql="Select * from usuaris where token=? ";
+		
+		PreparedStatement prs=conn.prepareStatement(sql);
+		prs.setString(1, user);
+		ResultSet rs=prs.executeQuery();
+		Usuari p=null;
+		while(rs.next()) {
+		//p=new Producte(rs.getString( "nom"), rs.getInt( "disponibilitat"), rs.getString( "descripcio"), rs.getInt("preu"), rs.getString("propietari"), rs.getString( "data"), rs.getInt("venuts"), rs.getString("dataFi"));
+		p= new Usuari(rs.getString("login"),rs.getString("password"));
+		
+		}
+		
+		if(p!=null) {
+			return true;
+		}else {
+			return false;
+		}
+		
+		
+	}
 	
 	
 
