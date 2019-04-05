@@ -1,8 +1,16 @@
 package api;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 
 import javax.ws.rs.Path;
@@ -96,6 +104,118 @@ public class ServeiCarro {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 	}
+	
+	
+	@Path("/obtenirProductes/{idUser}")	
+	@GET	
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response obtenirProductes(@PathParam("idUser") String user) {
+		try {
+			
+			
+			//String token=db.autenticar(nom,passwd);
+			
+			if(db.getToken(user)==false) {
+				return Response.status(Response.Status.UNAUTHORIZED).build();
+			}
+			
+			List<Producte> p=db.obtenirProductes();
+			
+			GenericEntity<List<Producte>> genericEntity = new GenericEntity<List<Producte>>(p){};
+			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	
+	
+	@Path("/afegirProducte/{idUser}/{producte}")	
+	@GET	
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response afegirProducte(@PathParam("idUser") String user,@PathParam("producte") String producte ) {
+		try {
+			
+			
+			//String token=db.autenticar(nom,passwd);
+			
+			
+			if(db.getToken(user)==false) {
+				return Response.status(Response.Status.UNAUTHORIZED).build();
+			}
+			
+			//Producte[] ptmp=producte.split(",");
+			
+		System.out.println(producte);
+		
+			List<Producte> p=db.obtenirProductes();
+			
+			GenericEntity<List<Producte>> genericEntity = new GenericEntity<List<Producte>>(p){};
+			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	
+	
+	
+	@Path("/obtenirProductes/data/{id}/{inici}/{fi}")	
+	@GET	
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response otenirProductesperData(@PathParam("id") String user,@PathParam("inici") String inici,@PathParam("fi") String fi) {
+		try {
+			
+			
+			//String token=db.autenticar(nom,passwd);
+			
+			//LocalDateTime datetime = LocalDateTime.parse(inici, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+			
+			DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+			Date datai=format.parse(inici);
+			Date dataf=format.parse(fi);
+			if(db.getToken(user)==false) {
+				return Response.status(Response.Status.UNAUTHORIZED).build();
+			}
+			
+			//Producte[] ptmp=producte.split(",");
+			
+		
+		
+			Collection<Producte> p=db.obtenirProductesPerData(datai.toString(), dataf.toString());
+			
+			GenericEntity<Collection<Producte>> genericEntity = new GenericEntity<Collection<Producte>>(p){};
+			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	
+	/*@Path("/data/{fi}")	
+	@GET	
+	@Produces( MediaType.APPLICATION_JSON )
+	public Response otenirProductesperData(@PathParam("fi") Date fi ) {
+		try {
+			
+			
+			//String token=db.autenticar(nom,passwd);
+			
+			
+//			if(db.getToken(user)==false) {
+//				return Response.status(Response.Status.UNAUTHORIZED).build();
+//			}
+			
+			//Producte[] ptmp=producte.split(",");
+			
+		
+		
+			List<Producte> p=db.obtenirProductes();
+			
+			GenericEntity<List<Producte>> genericEntity = new GenericEntity<List<Producte>>(p){};
+			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	*/
 	
 	
 	
