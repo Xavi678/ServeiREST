@@ -169,9 +169,12 @@ public class ServeiCarro {
 			
 			//LocalDateTime datetime = LocalDateTime.parse(inici, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
 			
-			DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+			/*DateFormat format= new SimpleDateFormat("yyyy-MM-dd");
 			Date datai=format.parse(inici);
-			Date dataf=format.parse(fi);
+			Date dataf=format.parse(fi);*/
+			
+			inici=inici.replace("-", " ");
+			fi=fi.replace("-", " ");
 			if(db.getToken(user)==false) {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
@@ -180,7 +183,7 @@ public class ServeiCarro {
 			
 		
 		
-			Collection<Producte> p=db.obtenirProductesPerData(datai.toString(), dataf.toString());
+			Collection<Producte> p=db.obtenirProductesPerData(inici, fi);
 			
 			GenericEntity<Collection<Producte>> genericEntity = new GenericEntity<Collection<Producte>>(p){};
 			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
