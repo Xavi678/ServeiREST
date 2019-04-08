@@ -16,9 +16,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -131,23 +134,24 @@ public class ServeiCarro {
 	}
 	
 	//http:localhost:8080/ServeiREST/api/serveiCarro/afegirProducte/{token}/{Producte}
-	@Path("/afegirProducte/{idUser}/{producte}")	
+	@Path("/afegirProducte")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
-	public Response afegirProducte(@PathParam("idUser") String user,@PathParam("producte") String producte ) {
+	public Response afegirProducte( @Context UriInfo uri ) {
 		try {
 			
 			
 			//String token=db.autenticar(nom,passwd);
 			
 			
-			if(db.getToken(user)==false) {
+			if(db.getToken(uri.getQueryParameters().getFirst("token"))==false) {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
 			
+			System.out.println(uri.getQueryParameters());
 			//Producte[] ptmp=producte.split(",");
 			
-		System.out.println(producte);
+		System.out.println(uri);
 		
 			List<Producte> p=db.obtenirProductes();
 			
