@@ -23,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
+//http://localhost:8080/ServeiREST/api/serveiCarro
 @Path("/serveiCarro")
 public class ServeiCarro {
 	
@@ -61,7 +61,7 @@ public class ServeiCarro {
 				
 	}*/
 	
-	
+	//http:localhost:8080/ServeiREST/api/serveiCarro/Autenticar/{nom}/{password}
 	@Path("/Autenticar/{nom}/{passwd}")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
@@ -74,7 +74,9 @@ public class ServeiCarro {
 			
 			String token=db.autenticar(nom,passwd);
 			
-			GenericEntity<String> genericEntity = new GenericEntity<String>(token){};
+			Token t=new Token(token, new Date());
+			
+			GenericEntity<Token> genericEntity = new GenericEntity<Token>(t){};
 			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
@@ -82,7 +84,7 @@ public class ServeiCarro {
 	}
 	
 	
-	
+	//http:localhost:8080/ServeiREST/api/serveiCarro/obtenirproducte/{token}/{idProducte}
 	@Path("/obtenirProducte/{idUser}/{idProduct}")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
@@ -105,7 +107,7 @@ public class ServeiCarro {
 		}
 	}
 	
-	
+	//http:localhost:8080/ServeiREST/api/obtenirProductes/{token}
 	@Path("/obtenirProductes/{idUser}")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
@@ -128,7 +130,7 @@ public class ServeiCarro {
 		}
 	}
 	
-	
+	//http:localhost:8080/ServeiREST/api/serveiCarro/afegirProducte/{token}/{Producte}
 	@Path("/afegirProducte/{idUser}/{producte}")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
@@ -157,7 +159,7 @@ public class ServeiCarro {
 	}
 	
 	
-	
+	//http:localhost:8080/ServeiREST/api/serveiCarro/obtenirProductes/{token}/{Data Inici}/{Data Fi}
 	@Path("/obtenirProductes/data/{id}/{inici}/{fi}")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
