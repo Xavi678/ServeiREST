@@ -80,6 +80,7 @@ public class ServeiCarro {
 			Token t=new Token(token, new Date());
 			
 			GenericEntity<Token> genericEntity = new GenericEntity<Token>(t){};
+		
 			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
