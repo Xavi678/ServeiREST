@@ -37,6 +37,17 @@ public class Producte {
 		
 	}
 	
+	public Producte( String nom, int disponibilitat, String descripcio, int preu, String propietari,
+			String data) {
+		super();
+		
+		this.nom = nom;
+		this.disponibilitat = disponibilitat;
+		this.descripcio = descripcio;
+		this.preu = preu;
+		this.propietari = propietari;
+		this.data = data;
+	}
 	
 	
 	public Producte(int id, String nom, int disponibilitat, String descripcio, int preu, String propietari,

@@ -135,7 +135,7 @@ public class ServeiCarro {
 	}
 	
 	//http:localhost:8080/ServeiREST/api/serveiCarro/afegirProducte/{token}/{Producte}
-	@Path("/afegirProducte")	
+	@Path("/afegirProducte/{token}")	
 	@GET	
 	@Produces( MediaType.APPLICATION_JSON )
 	public Response afegirProducte( @Context UriInfo uri ) {
@@ -149,14 +149,14 @@ public class ServeiCarro {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
 			
-			System.out.println(uri.getQueryParameters());
+			//System.out.println(uri.getQueryParameters());
 			//Producte[] ptmp=producte.split(",");
 			
-		System.out.println(uri);
+		//System.out.println(uri);
 		
-			List<Producte> p=db.obtenirProductes();
+			Boolean p=db.inserirProducte(new Producte(uri.getQueryParameters().getFirst("nom"),Integer.parseInt( uri.getQueryParameters().getFirst("disponibilitat")),uri.getQueryParameters().getFirst("descripcio"),Integer.parseInt(uri.getQueryParameters().getFirst("preu")),uri.getQueryParameters().getFirst("propietari"),uri.getQueryParameters().getFirst("data")));
 			
-			GenericEntity<List<Producte>> genericEntity = new GenericEntity<List<Producte>>(p){};
+			GenericEntity<Boolean> genericEntity = new GenericEntity<Boolean>(p){};
 			return Response.ok(genericEntity, MediaType.APPLICATION_JSON).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).build();

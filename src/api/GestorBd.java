@@ -287,7 +287,7 @@ public class GestorBd {
 		return productes;
 	}
 
-	public void inserirProducte(Producte producte) throws SQLException {
+	public Boolean inserirProducte(Producte producte) throws SQLException {
 		Connection conn = DriverManager.getConnection("jdbc:mysql://"+this.hostname+"/"+this.database+this.temps,this.userLogin,this.userPasswd);
 		String sqlInserir="insert into productes(nom,disponibilitat,descripcio,preu,propietari,data,venuts,dataFi) Values(?,?,?,?,?,?,?,?)";
 		PreparedStatement insert=conn.prepareStatement(sqlInserir);
@@ -298,8 +298,14 @@ public class GestorBd {
 		insert.setString(5, producte.getPropietari());
 		insert.setString(6, producte.getData());
 		insert.setInt(7, 0);
-		insert.setString(8, producte.getDataFi());
-		insert.executeUpdate();
+	
+		int i=insert.executeUpdate();
+		
+		if(i>0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	public void crearCarro(Usuari usuari) throws SQLException {
