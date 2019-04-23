@@ -93,19 +93,19 @@ public class ServeiCarro {
 	}
 
 	// http:localhost:8080/ServeiREST/api/serveiCarro/obtenirproducte/{token}/{idProducte}
-	@Path("/obtenirProducte/{idUser}/{idProduct}")
+	@Path("/obtenirProducte")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response obtenirProducte(@QueryParam("idUser") String user, @QueryParam("idProduct") String product) {
+	public Response obtenirProducte(@QueryParam("idUser") String idUser, @QueryParam("idProduct") String idProduct) {
 		try {
 
 			// String token=db.autenticar(nom,passwd);
 
-			if (db.getToken(user) == false) {
+			if (db.getToken(idUser) == false) {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
 
-			Producte p = db.obtenirProducte(product);
+			Producte p = db.obtenirProducte(idProduct);
 
 			GenericEntity<Producte> genericEntity = new GenericEntity<Producte>(p) {
 			};
@@ -116,7 +116,7 @@ public class ServeiCarro {
 	}
 
 	// http:localhost:8080/ServeiREST/api/obtenirProductes/{token}
-	@Path("/obtenirProductes/{idUser}")
+	@Path("/obtenirProductes")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response obtenirProductes(@QueryParam("idUser") String user) {
@@ -174,7 +174,7 @@ public class ServeiCarro {
 
 	// http:localhost:8080/ServeiREST/api/serveiCarro/obtenirProductes/{token}/{Data
 	// Inici}/{Data Fi}
-	@Path("/obtenirProductes/data/{id}/{inici}/{fi}")
+	@Path("/obtenirProductes/data")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response otenirProductesperData(@QueryParam("id") String user, @QueryParam("inici") String inici,
